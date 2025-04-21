@@ -8,8 +8,10 @@ dotenv.config()
 
 const adminUser = {
   username: 'admin',
-  passwordHash: '$2b$10$IC1m.kSF0MXeIHJo1uUnI.k5W4QaIBFF2ucmQPpaN2IRJXzM01fBq'
+  passwordHash: '$2b$10$BE8j5L8dav1VhmlBxtE1MeucoAkpimQc1nkpdFh8LUFctnefq/QB6'
 }
+
+// $2b$10$IC1m.kSF0MXeIHJo1uUnI.k5W4QaIBFF2ucmQPpaN2IRJXzM01fBq
 
 const JWT_SECRET = process.env.JWT_SECRET
 
