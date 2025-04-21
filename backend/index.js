@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const productsRoute = require('./routes/products')
-const port = 5000
+const port = process.env.PORT || 5000
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const cors = require('cors')
@@ -10,11 +10,12 @@ const path = require('path')
 
 dotenv.config()
 
+app.use(cors())
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('🟢 Connected to MongoDB Atlas'))
 .catch((err) => console.error('🔴 MongoDB Atlas connection error:', err));
 
-app.use(cors())
 app.use(express.json())
 app.use('/products', productsRoute)
 app.use(authRoutes)
