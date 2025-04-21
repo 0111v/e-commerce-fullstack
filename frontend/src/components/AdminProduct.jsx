@@ -13,7 +13,7 @@ const AdminProduct = ({product, onDelete, onUpdate}) => {
   }
 
   const handleSave = () => {
-    fetch(`http://localhost:5000/products/${product._id}`, {
+    fetch(`/products/${product._id}`, {
       method: 'put',
       headers: { 
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const AdminProduct = ({product, onDelete, onUpdate}) => {
   }
 
   const handleDelete = () => {
-    fetch(`http://localhost:5000/products/${product._id}`, {
+    fetch(`/products/${product._id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')

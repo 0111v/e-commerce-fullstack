@@ -12,7 +12,7 @@ const AddProductModal = ({ onClose, onAdd }) => {
   };
 
   const handleSubmit = () => {
-    fetch('http://localhost:5000/products', {
+    fetch('/products', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
