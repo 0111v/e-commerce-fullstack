@@ -1,0 +1,33 @@
+const express = require('express')
+const router = express.Router()
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
+
+dotenv.config()
+
+const adminUser = {
+  username: 'admin',
+  passwordHash: '$2b$10$IC1m.kSF0MXeIHJo1uUnI.k5W4QaIBFF2ucmQPpaN2IRJXzM01fBq'
+}
+
+const JWT_SECRET = process.env.JWT_SECRET
+
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body
+
+  if (username !== adminUser.username) {
+    return res.status(401).json({ message: 'invalid credentials'})
+  }
+
+  const passwordMatch = await bcrypt.compare(password, adminUser.passwordHash)
+  if (!passwordMatch) {
+    return res.status(401).json({ message: 'invalid credentials'})
+  }
+
+  const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '1h' })
+
+  res.json({ token })
+})
+
+module.exports = router
