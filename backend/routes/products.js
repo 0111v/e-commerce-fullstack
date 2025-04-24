@@ -4,11 +4,22 @@ const Product = require('../models/Product')
 const verifyToken = require('../middleware/auth')
 
 router.get('/', async (req, res) => {
+  const { gender } = req.query
   try {
-    const products = await Product.find()
+    const query = gender ? { gender } : {}
+    const products = await Product.find(query)
     res.json(products)
   } catch (error) {
     res.status(500).json({ error: error.message})
+  }
+})
+
+router.get('/:id', async (req, res) => {
+  try {
+    const findProduct = await Product.findById(req.params.id)
+    res.json(findProduct)
+  } catch (error) {
+    res.status(400).json({error: error.message})
   }
 })
 

@@ -6,6 +6,11 @@ import ProductDetails from "./pages/ProductDetails";
 import Checkout from "./pages/Checkout";
 import Admin from "./pages/Admin"
 import AdminLogin from "./components/AdminLogin";
+import Footer from "./components/Footer";
+import MensPage from "./pages/MensPage";
+import WomansPage from "./pages/WomansPage";
+import AccsPage from "./pages/AccsPage";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
   const navigate = useNavigate()
@@ -13,10 +18,14 @@ function App() {
     navigate('/admin')
   }
   return (
-    <>
+    <div className="min-h-screen bg-white">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/mens" element={<MensPage />} />
+        <Route path="/womans" element={<WomansPage />} />
+        <Route path="/accs" element={<AccsPage />}/>
+        <Route path="/news" element={<NewsPage/>} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/checkout" element={<Checkout />}/>
@@ -24,7 +33,8 @@ function App() {
         <Route path="/admin" element={
           localStorage.getItem('token') ? <Admin /> : <Navigate to={'/admin-login'} />} />
       </Routes>
-    </>
+      <Footer />
+    </div>
   );
 }
 

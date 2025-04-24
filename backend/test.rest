@@ -3,11 +3,11 @@ GET http://localhost:3000
 
 ### get products
 
-GET http://localhost:3000/products
+GET http://localhost:5000/products
 
 
 ### post
-POST http://localhost:3000/products
+POST http://localhost:5000/products
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzQ1MDk2Nzc0LCJleHAiOjE3NDUxMDAzNzR9.LVKRZJf7o8ppkKA5FfT25-N_BEbvwlGBjh045MLQ2wc
 Content-Type: application/json
 
