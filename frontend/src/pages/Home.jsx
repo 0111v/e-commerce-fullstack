@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 // import { products } from '../data/products'
 import ProductCard from '../components/ProductCard'
-import { useCart } from '../context/CartContext'
-import Carousel from '../components/Caroulse'
+// import { useCart } from '../context/CartContext'
+import Carousel from '../components/Carousel'
 import { Truck, ShieldCheck, BadgeCheck } from "lucide-react"
 import { Link } from 'react-router-dom'
 import CarouselAccs from '../components/CarouselAccs'
 
+
 const Home = () => {
   
   const [ products, setProducts] = useState([])
-  const { search, setSearch} = useCart()
-  const [ accs, setAccs ] = useState([])
 
   useEffect(() => {
     fetch("/products")
@@ -45,12 +44,12 @@ const Home = () => {
       <h2 className="text-center mt-16 text-gray-800 font-playfair text-6xl ">Lançamentos</h2>
       <Carousel />
       <div className='flex item-center mb-16'>
-      <Link to={'/news'} className='px-8 py-2 mx-auto text-center bg-black text-white'>Ver todos</Link>
+      <Link to={'/news'} className='px-8 py-2 mx-auto text-center bg-black text-white hover:bg-gray-800 active:bg-gray-600'>Ver todos</Link>
       </div>
       <h2 className="text-center mt-8 text-gray-800 font-playfair text-6xl ">Acessórios</h2>
       <CarouselAccs />
       <div className='flex item-center mb-16'>
-      <Link to={'/accs'} className='px-8 py-2 mx-auto text-center bg-black text-white'>Ver todos</Link>
+      <Link to={'/accs'} className='px-8 py-2 mx-auto text-center bg-black text-white hover:bg-gray-800 active:bg-gray-600'>Ver todos</Link>
       </div>
 
 

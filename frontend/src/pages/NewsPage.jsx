@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard'
-import { useCart } from '../context/CartContext'
+import { useSearchStore } from '../stores/useSearchStore'
 
 const NewsPage = () => {
   const [products, setProducts] = useState([])
-  const {search, setSearch} = useCart()
+  const {search, setSearch} = useSearchStore()
   
   
   

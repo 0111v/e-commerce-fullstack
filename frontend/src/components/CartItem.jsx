@@ -1,8 +1,9 @@
 import React from 'react'
-import { useCart } from '../context/CartContext'
+// import { useCart } from '../context/CartContext'
+import { useCartStore } from '../stores/useCartStore'
 
 const CartItem = ({ item }) => {
-  const { removeFromCart, increaseQty, decreaseQty } = useCart()
+  const { removeFromCart, increaseQty, decreaseQty } = useCartStore()
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-white shadow rounded-lg p-4 border">

@@ -1,16 +1,17 @@
 import React from 'react'
-import { useCart } from '../context/CartContext'
+// import { useCart } from '../context/CartContext'
+import { useCartStore } from '../stores/useCartStore'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
-  const { cart, setCart } = useCart()
+  const { cart, clearCart } = useCartStore()
   const navigate = useNavigate()
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   const handlePlaceOrder = () => {
     alert("Pedido realizado com sucesso! 🎉\n\nEste é um projeto fictício para fins de estudo e nenhum pedido real foi feito.")
-    setCart([]) 
+    clearCart() 
     navigate('/') 
   }
 

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { useCart } from '../context/CartContext'
+// import { useCart } from '../context/CartContext'
 import CartItem from '../components/CartItem'
 import { Link } from 'react-router-dom'
+import { useCartStore } from '../stores/useCartStore'
 
 const Cart = () => {
-  const {cart} = useCart()
+  const {cart} = useCartStore()
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   return (

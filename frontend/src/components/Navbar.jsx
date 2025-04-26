@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+// import { useCart } from '../context/CartContext';
 import { Search } from 'lucide-react';
+import { useSearchStore } from '../stores/useSearchStore';
+import { useCartStore } from '../stores/useCartStore';
 
 const Navbar = () => {
   
-  const { cart, search, setSearch } = useCart();
+  const { cart } = useCartStore();
+  const { search, setSearch } = useSearchStore()  
   const location = useLocation()
   const navigate = useNavigate()
 

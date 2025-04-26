@@ -1,9 +1,10 @@
 import React from 'react'
-import { useCart } from '../context/CartContext'
+// import { useCart } from '../context/CartContext'
 import { Link } from 'react-router-dom'
+import { useCartStore } from '../stores/useCartStore'
 
 const ProductCard = ({ product }) => {
-  const {addToCart} = useCart()
+  const {addToCart} = useCartStore()
   
 
   return (
@@ -15,7 +16,7 @@ const ProductCard = ({ product }) => {
         <h2 className='text-xl font-medium text-gray-800 mb-1 line-clamp-2'>{product.title}</h2>
         <p className="text-lg font-semibold text-green-600 mb-2">${(product.price).toFixed(2)}</p>
         <button 
-          className='mt-auto bg-black text-white text-md font-semibold py-2 px-4 rounded hover:bg-gray-800 transition-colors cursor-pointer' 
+          className='mt-auto bg-black text-white text-md font-semibold py-2 px-4 rounded hover:bg-gray-800 active:bg-gray-600 transition-colors cursor-pointer' 
           onClick={() => addToCart(product)}>
           Adicionar ao carrinho
         </button>
