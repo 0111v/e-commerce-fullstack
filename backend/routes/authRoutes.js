@@ -1,35 +1,40 @@
 const express = require('express')
 const router = express.Router()
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv')
+const { register, login } = require('../controllers/authController')
 
-dotenv.config()
+router.post('/register', register)
+router.post('/login', login)
 
-const adminUser = {
-  username: 'admin',
-  passwordHash: '$2b$10$BE8j5L8dav1VhmlBxtE1MeucoAkpimQc1nkpdFh8LUFctnefq/QB6'
-}
+// const bcrypt = require('bcrypt')
+// const jwt = require('jsonwebtoken')
+// const dotenv = require('dotenv')
 
-// $2b$10$IC1m.kSF0MXeIHJo1uUnI.k5W4QaIBFF2ucmQPpaN2IRJXzM01fBq
+// dotenv.config()
 
-const JWT_SECRET = process.env.JWT_SECRET
+// const adminUser = {
+//   username: 'admin',
+//   passwordHash: '$2b$10$BE8j5L8dav1VhmlBxtE1MeucoAkpimQc1nkpdFh8LUFctnefq/QB6'
+// }
 
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body
+// // $2b$10$IC1m.kSF0MXeIHJo1uUnI.k5W4QaIBFF2ucmQPpaN2IRJXzM01fBq
 
-  if (username !== adminUser.username) {
-    return res.status(401).json({ message: 'invalid credentials'})
-  }
+// const JWT_SECRET = process.env.JWT_SECRET
 
-  const passwordMatch = await bcrypt.compare(password, adminUser.passwordHash)
-  if (!passwordMatch) {
-    return res.status(401).json({ message: 'invalid credentials'})
-  }
+// router.post('/login', async (req, res) => {
+//   const { username, password } = req.body
 
-  const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '1h' })
+//   if (username !== adminUser.username) {
+//     return res.status(401).json({ message: 'invalid credentials'})
+//   }
 
-  res.json({ token })
-})
+//   const passwordMatch = await bcrypt.compare(password, adminUser.passwordHash)
+//   if (!passwordMatch) {
+//     return res.status(401).json({ message: 'invalid credentials'})
+//   }
+
+//   const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '1h' })
+
+//   res.json({ token })
+// })
 
 module.exports = router

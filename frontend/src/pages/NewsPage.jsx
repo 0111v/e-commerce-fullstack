@@ -7,7 +7,7 @@ const NewsPage = () => {
   const {search, setSearch} = useSearchStore()
   
   
-  
+  console.log(search)
 
   useEffect(() => {
     fetch('/products')

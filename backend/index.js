@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use(express.json())
 app.use('/products', productsRoute)
-app.use(authRoutes)
+app.use('/auth', authRoutes)
 
 // app.get('/', (req, res) => {
 //   res.send('API is working')

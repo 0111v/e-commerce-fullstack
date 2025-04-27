@@ -1,43 +1,65 @@
 import React, { useState } from 'react'
+import { useUserStore } from '../stores/useUserStore'
+import axios from 'axios'
 
 const AdminProduct = ({product, onDelete, onUpdate}) => {
+  const { token } = useUserStore()
   const [isEditing, setIsEditing] = useState(false)
   const [editedProduct, setEditedProduct] = useState({
     title: product.title,
     price: product.price,
-    image: product.image
+    image: product.image,
+    gender: product.gender
   })
 
   const handleEditChange = (e) => {
     setEditedProduct({...editedProduct, [e.target.name]: e.target.value})
   }
 
-  const handleSave = () => {
-    fetch(`/products/${product._id}`, {
-      method: 'put',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
-      body: JSON.stringify(editedProduct)
-    }).then((res) => {
-      onUpdate(product._id, editedProduct)
-      setIsEditing(false)
-    })
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   }
 
-  const handleDelete = () => {
-    fetch(`/products/${product._id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      }
-    }).then((res) => {
-      if (res.ok) {
-        onDelete(product._id)
-      }
-    })
+  const handleDelete = async () => {
+    const res = await axios.delete(`/products/${product._id}`, config)
+    onDelete(product._id)
   }
+
+  const handleSave = async () => {
+    const res = await axios.put(`/products/${product._id}`, editedProduct, config)
+    onUpdate(product._id, editedProduct)
+    setIsEditing(false)
+  }
+
+
+  // const handleSave = () => {
+  //   fetch(`/products/${product._id}`, {
+  //     method: 'put',
+  //     headers: { 
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + localStorage.getItem('token')
+  //     },
+  //     body: JSON.stringify(editedProduct)
+  //   }).then((res) => {
+  //     onUpdate(product._id, editedProduct)
+  //     setIsEditing(false)
+  //   })
+  // }
+
+  // const handleDelete = () => {
+  //   fetch(`/products/${product._id}`, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       'Authorization': 'Bearer ' + localStorage.getItem('token')
+  //     }
+  //   }).then((res) => {
+  //     if (res.ok) {
+  //       onDelete(product._id)
+  //     }
+  //   })
+  // }
 
   return (
     <div className='border rounded-lg p-4 shadow-md mb-4'>
@@ -61,6 +83,13 @@ const AdminProduct = ({product, onDelete, onUpdate}) => {
             type="text"
             name='image'
             value={editedProduct.image}
+            onChange={(e) => handleEditChange(e)}
+            className='block w-full mb-2 p-1 border rounded'
+          />
+          <input 
+            type="text"
+            name='gender'
+            value={editedProduct.gender}
             onChange={(e) => handleEditChange(e)}
             className='block w-full mb-2 p-1 border rounded'
           />

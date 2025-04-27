@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/products': 'http://localhost:5000',
-      '/login': 'http://localhost:5000',
+      '/auth': 'http://localhost:5000',
     },
   },
 });

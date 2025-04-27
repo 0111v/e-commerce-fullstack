@@ -39,3 +39,22 @@ Content-Type: application/json
   "username": "admin",
   "password": "admin"
 }
+
+### register
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "username": "test2",
+  "password": "123456",
+  "email": "test2@gmail.com"
+}
+
+### login 
+POST http://localhost:5000/auth/login 
+Content-Type: application/json
+
+{
+  "email": "test1@gmail.com",
+  "password": "123456"
+}

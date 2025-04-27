@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useUserStore } from '../stores/useUserStore';
 
 const AddProductModal = ({ onClose, onAdd }) => {
+  const { token } = useUserStore()
   const [newProduct, setNewProduct] = useState({
     title: '',
     price: '',
@@ -12,20 +15,38 @@ const AddProductModal = ({ onClose, onAdd }) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    fetch('/products', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
-      body: JSON.stringify(newProduct)
-    }).then(res => res.json())
-      .then((data) => {
-        onAdd(data);
-        onClose();
-      });
-  };
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post('/products', newProduct, config)
+      console.log(res.data)
+      onAdd(res.data);
+      onClose();
+    } catch (error) {
+      console.error(error.response?.data?.message || error.message)     
+    }
+  }
+
+  // const handleSubmit = () => {
+  //   fetch('/products', {
+  //     method: 'POST',
+  //     headers: { 
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + localStorage.getItem('token')
+  //     },
+  //     body: JSON.stringify(newProduct)
+  //   }).then(res => res.json())
+  //     .then((data) => {
+  //       onAdd(data);
+  //       onClose();
+  //     });
+  // };
 
   return (
     <div className="fixed inset-0 bg-black/75 bg-opacity-50 flex justify-center items-center">

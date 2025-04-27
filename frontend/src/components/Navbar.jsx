@@ -4,11 +4,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { useSearchStore } from '../stores/useSearchStore';
 import { useCartStore } from '../stores/useCartStore';
+import { useUserStore } from '../stores/useUserStore';
 
 const Navbar = () => {
   
   const { cart } = useCartStore();
   const { search, setSearch } = useSearchStore()  
+  const { isLoggedIn, logout } = useUserStore()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -46,10 +48,22 @@ const Navbar = () => {
 
         <div className="flex gap-6 text-sm font-medium text-gray-700">
           {/* <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link> */}
-          <Link to="/cart" className="text-xl hover:text-blue-600 transition-colors">
+          <Link to="/cart" className="my-auto text-xl hover:text-blue-600 transition-colors">
             Carrinho ({cart.length})
           </Link>
-          <Link to="/" className="text-xl hover:text-blue-600 transition-colors">Contato</Link>
+          {isLoggedIn ? 
+              <button 
+                onClick={logout}
+                className='bg-white text-black border text-xl py-2 px-4 hover:bg-gray-200 active:bg-gray-400 transition-colors cursor-pointer'
+                >Logout
+              </button>
+             : 
+              <button
+                onClick={() => navigate('/login')}
+                className='bg-black text-white text-xl font-semibold py-2 px-6 hover:bg-gray-800 active:bg-gray-600 transition-colors cursor-pointer'
+                >Login
+              </button>
+            }
         </div>
       </div>
 
@@ -62,10 +76,22 @@ const Navbar = () => {
 
           <div className="flex gap-4 text-sm font-medium text-gray-700">
             {/* <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link> */}
-            <Link to="/cart" className="hover:text-blue-600 transition-colors">
+            <Link to="/cart" className="my-auto text-md hover:text-blue-600 transition-colors">
               Carrinho ({cart.length})
             </Link>
-            <Link to="https://www.linkedin.com/in/victor-oliveira-855844249/" className="hover:text-blue-600 transition-colors">Contato</Link>
+            {isLoggedIn ? 
+              <button 
+                onClick={logout}
+                className='bg-white text-black border text-md py-2 px-4 hover:bg-gray-200 active:bg-gray-400 transition-colors cursor-pointer'
+                >Logout
+              </button>
+             : 
+              <button
+                onClick={() => navigate('/login')}
+                className='bg-black text-white text-md font-semibold py-2 px-6 hover:bg-gray-800 active:bg-gray-600 transition-colors cursor-pointer'
+                >Login
+              </button>
+            }
           </div>
         </div>
 

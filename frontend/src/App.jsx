@@ -11,8 +11,11 @@ import MensPage from "./pages/MensPage";
 import WomansPage from "./pages/WomansPage";
 import AccsPage from "./pages/AccsPage";
 import NewsPage from "./pages/NewsPage";
+import Login from "./pages/Login";
+import { useUserStore } from "./stores/useUserStore";
 
 function App() {
+  const { user } = useUserStore()
   const navigate = useNavigate()
   const handleLogin = () => {
     navigate('/admin')
@@ -31,7 +34,8 @@ function App() {
         <Route path="/checkout" element={<Checkout />}/>
         <Route path="/admin-login" element={<AdminLogin onLogin={handleLogin}/>} />
         <Route path="/admin" element={
-          localStorage.getItem('token') ? <Admin /> : <Navigate to={'/admin-login'} />} />
+          user?.isAdmin ? <Admin /> : <Navigate to={'/login'} />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </div>
