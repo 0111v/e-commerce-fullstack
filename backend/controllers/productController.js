@@ -1,9 +1,6 @@
-const express = require('express')
-const router = express.Router()
-const Product = require('../models/Product')
-const verifyToken = require('../middleware/auth')
+const Product = require('../models//Product')
 
-router.get('/', async (req, res) => {
+const getProducts = async (req, res) => {
   const { gender } = req.query
   try {
     const query = gender ? { gender } : {}
@@ -12,27 +9,27 @@ router.get('/', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message})
   }
-})
+}
 
-router.get('/:id', async (req, res) => {
+const getProductById = async (req, res) => {
   try {
     const findProduct = await Product.findById(req.params.id)
     res.json(findProduct)
   } catch (error) {
     res.status(400).json({error: error.message})
   }
-})
+}
 
-router.post('/', verifyToken, async (req, res) => {
+const createProduct = async (req, res) => {
   try {
     const products = await Product.create(req.body)
     res.status(201).json(products)
   } catch (error) {
     res.status(400).json({ error: error.message})
   }
-})
+}
 
-router.put('/:id', verifyToken, async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -44,9 +41,9 @@ router.put('/:id', verifyToken, async (req, res) => {
   } catch (error) {
     res.status(400).json({error: error.message})
   }
-})
+}
 
-router.delete('/:id', verifyToken, async (req, res) => {
+const deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id)
     if (!deletedProduct) return res.status(400).json({message: 'product not found'})
@@ -54,8 +51,12 @@ router.delete('/:id', verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({error: error.message})
   }
-})
+}
 
-  
-
-module.exports = router
+module.exports = {
+  getProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct
+}

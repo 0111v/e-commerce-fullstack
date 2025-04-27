@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const path = require('path')
 
-const productsRoute = require('./routes/products')
-const authRoutes = require('./routes/auth')
+const productsRoute = require('./routes/productRoutes')
+const authRoutes = require('./routes/authRoutes')
 
 dotenv.config()
 
