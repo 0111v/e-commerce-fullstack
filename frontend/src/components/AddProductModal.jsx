@@ -1,32 +1,23 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useUserStore } from '../stores/useUserStore';
+import { useProductStore } from '../stores/useProductStore';
 
 const AddProductModal = ({ onClose, onAdd }) => {
-  const { token } = useUserStore()
   const [newProduct, setNewProduct] = useState({
     title: '',
     price: '',
     image: '',
     gender: ''
   });
+  const { createProduct } = useProductStore()
 
   const handleChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('/products', newProduct, config)
-      console.log(res.data)
-      onAdd(res.data);
+      await createProduct(newProduct)
+      onAdd();
       onClose();
     } catch (error) {
       console.error(error.response?.data?.message || error.message)     

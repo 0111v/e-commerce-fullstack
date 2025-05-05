@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useUserStore } from '../stores/useUserStore'
 
 const Login = () => {
   const { login, user } = useUserStore()
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
+  
 
   const navigate = useNavigate()
   const location = useLocation()
 
   const from = location.state?.from || '/'
 
-  console.log(user)
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -43,8 +43,10 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           className='block w-full mb-2 p-2 border'
         />
-        <div className='flex flex-row'>
-          <button className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer'>Login</button>
+        <div className='flex flex-col justify-center items-center'>
+          <button className='mt-3 mb-2 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer'>Login</button>
+        <Link to={'/register'}>Nao tem uma conta?</Link>
+          
         </div>
 
       </form>

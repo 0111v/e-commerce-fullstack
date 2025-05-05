@@ -13,13 +13,24 @@ import AccsPage from "./pages/AccsPage";
 import NewsPage from "./pages/NewsPage";
 import Login from "./pages/Login";
 import { useUserStore } from "./stores/useUserStore";
+import { useEffect } from "react";
+import Register from "./pages/Register";
 
 function App() {
-  const { user } = useUserStore()
+  const { user, getProfile } = useUserStore()
   const navigate = useNavigate()
   const handleLogin = () => {
     navigate('/admin')
   }
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      await getProfile()
+    }
+
+    fetchProfile()
+  }, [])
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -34,8 +45,10 @@ function App() {
         <Route path="/checkout" element={<Checkout />}/>
         <Route path="/admin-login" element={<AdminLogin onLogin={handleLogin}/>} />
         <Route path="/admin" element={
-          user?.isAdmin ? <Admin /> : <Navigate to={'/login'} />} />
+          user?.role === 'admin' ? <Admin /> : <Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {/* {console.log(user)} */}
       </Routes>
       <Footer />
     </div>

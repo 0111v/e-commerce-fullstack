@@ -10,7 +10,7 @@ const Navbar = () => {
   
   const { cart } = useCartStore();
   const { search, setSearch } = useSearchStore()  
-  const { isLoggedIn, logout } = useUserStore()
+  const { user, logout, getProfile } = useUserStore()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -19,6 +19,18 @@ const Navbar = () => {
   //     setSearch('')
   //   }
   // }, [location.pathname])
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      await getProfile()
+    } 
+
+    fetchUser()
+  }, [])
+
+  const handleLogout = async () => {
+    await logout()
+  }
 
   return (
     <nav className="bg-white shadow-md px-6 py-4 sticky top-0 z-50 font-playfair">
@@ -51,9 +63,9 @@ const Navbar = () => {
           <Link to="/cart" className="my-auto text-xl hover:text-blue-600 transition-colors">
             Carrinho ({cart.length})
           </Link>
-          {isLoggedIn ? 
+          {user ? 
               <button 
-                onClick={logout}
+                onClick={handleLogout}
                 className='bg-white text-black border text-xl py-2 px-4 hover:bg-gray-200 active:bg-gray-400 transition-colors cursor-pointer'
                 >Logout
               </button>
@@ -79,9 +91,9 @@ const Navbar = () => {
             <Link to="/cart" className="my-auto text-md hover:text-blue-600 transition-colors">
               Carrinho ({cart.length})
             </Link>
-            {isLoggedIn ? 
+            {user ? 
               <button 
-                onClick={logout}
+                onClick={handleLogout}
                 className='bg-white text-black border text-md py-2 px-4 hover:bg-gray-200 active:bg-gray-400 transition-colors cursor-pointer'
                 >Logout
               </button>

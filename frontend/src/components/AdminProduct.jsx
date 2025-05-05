@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { useUserStore } from '../stores/useUserStore'
-import axios from 'axios'
+import { useProductStore } from '../stores/useProductStore'
 
-const AdminProduct = ({product, onDelete, onUpdate}) => {
-  const { token } = useUserStore()
+const AdminProduct = ({product, onSuccess}) => {
+  const { updateProduct, deleteProduct } = useProductStore()
   const [isEditing, setIsEditing] = useState(false)
   const [editedProduct, setEditedProduct] = useState({
     title: product.title,
@@ -16,20 +15,14 @@ const AdminProduct = ({product, onDelete, onUpdate}) => {
     setEditedProduct({...editedProduct, [e.target.name]: e.target.value})
   }
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-
   const handleDelete = async () => {
-    const res = await axios.delete(`/products/${product._id}`, config)
-    onDelete(product._id)
+    deleteProduct(product._id)
+    onSuccess()
   }
 
   const handleSave = async () => {
-    const res = await axios.put(`/products/${product._id}`, editedProduct, config)
-    onUpdate(product._id, editedProduct)
+    updateProduct(product._id, editedProduct)
+    onSuccess()
     setIsEditing(false)
   }
 

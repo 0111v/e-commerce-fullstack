@@ -45,9 +45,9 @@ POST http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
-  "username": "test2",
-  "password": "123456",
-  "email": "test2@gmail.com"
+  "username": "user6",
+  "password": "password",
+  "email": "email6"
 }
 
 ### login 
@@ -55,6 +55,7 @@ POST http://localhost:5000/auth/login
 Content-Type: application/json
 
 {
-  "email": "test1@gmail.com",
-  "password": "123456"
+  "email": "email3",
+  "password": "password"
 }
+

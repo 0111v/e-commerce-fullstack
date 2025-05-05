@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard'
 import { useSearchStore } from '../stores/useSearchStore'
+import { useProductStore } from '../stores/useProductStore'
 
 const NewsPage = () => {
-  const [products, setProducts] = useState([])
+  // const [products, setProducts] = useState([])
   const {search, setSearch} = useSearchStore()
-  
-  
-  console.log(search)
+  const { products, getAllProducts } = useProductStore()
+
+  // useEffect(() => {
+  //   fetch('/products')
+  //     .then(res => res.json())
+  //     .then(data => setProducts(data))
+  // }, [])
 
   useEffect(() => {
-    fetch('/products')
-      .then(res => res.json())
-      .then(data => setProducts(data))
-  }, [])
+    const fetchProducts = async () => {
+      getAllProducts()
+    }
+
+    fetchProducts()
+  })
 
   return (
     <div className='max-w-7xl mx-auto'>

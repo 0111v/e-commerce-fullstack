@@ -9,14 +9,6 @@ import CarouselAccs from '../components/CarouselAccs'
 
 
 const Home = () => {
-  
-  const [ products, setProducts] = useState([])
-
-  useEffect(() => {
-    fetch("/products")
-      .then(res => res.json())
-      .then(data => setProducts(data))
-  }, [])
 
   return (
     <div className='max-w-7xl mx-auto  '>
