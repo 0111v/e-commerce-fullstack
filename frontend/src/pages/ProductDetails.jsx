@@ -50,7 +50,9 @@ const ProductDetails = () => {
             </button>
 
             <div className="mt-4">
-              <Link to="/" className="text-blue-500 hover:underline text-sm">← Voltar para os produtos</Link>
+              <Link to="/" className="text-blue-500 hover:underline text-sm">
+                ← Voltar para os produtos
+              </Link>
             </div>
           </div>
         </>
