@@ -108,11 +108,41 @@ const logout = (req, res) => {
   return res.status(200).json({ message: 'logout successfully'})
 }
 
+const refreshToken = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'no refresh token provided' })
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET)
+    const user = await User.findById(decoded.id)
+    if (!user) {
+      return res.status(401).json({ message: 'user does not exist'})
+    }
+
+    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_ACCESS_SECRET, { expiresIn: '15m' })
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 15 * 60 * 1000
+    })
+
+    return res.json({ message: 'access token refreshed'})
+  } catch (error) {
+    console.log('failed to refresh token', error)
+    return res.status(403).json({ message: 'invalid or expired refresh token' })
+  }
+}
+
 module.exports = {
   register,
   login,
   getProfile,
-  logout
+  logout,
+  refreshToken
 }
 
 

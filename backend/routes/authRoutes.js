@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const { register, login, getProfile, logout } = require('../controllers/authController')
+const { register, login, getProfile, logout, refreshToken } = require('../controllers/authController')
 const { verifyToken } = require('../middleware/auth')
 
 router.post('/register', register)
 router.post('/login', login)
 router.get('/profile', verifyToken, getProfile)
 router.post('/logout', logout)
+router.post('/refresh', refreshToken)
 
 // const bcrypt = require('bcrypt')
 // const jwt = require('jsonwebtoken')

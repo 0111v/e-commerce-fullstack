@@ -25,12 +25,36 @@ export const useUserStore = create(persist(
     logout: async () => {
       const res = await axios.post('auth/logout')
       set({ user: null})
+    },
+
+    refreshToken: async() => {
+      const res = await axios.post('/auth/refresh')
     }
   }), {
     name: 'user-storage',
     partialize: (state) => ({ user: state.user })
   }
 ))
+
+axios.interceptors.response.use(
+  res => res,
+  async (error) => {
+    const originalRequest = error.config
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      try {
+        await axios.post('/auth/refresh', {}, { withCredentials: true })
+        return axios(originalRequest)
+      } catch (err) {
+        console.error('Refresh failed:', err)
+      }
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 // export const useUserStore = create(
 //   persist(
