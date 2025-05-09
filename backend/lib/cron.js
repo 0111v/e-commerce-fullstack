@@ -1,7 +1,7 @@
 const cron = require('cron')
 const https = require('https')
 
-const job = cron.CronJob("*/13 * * * *", function () {
+const job = new cron.CronJob("*/13 * * * *", function () {
   https
     .get(process.env.API_URL, (res) => {
       if (res.statusCode === 200) console.log("GET request sent successfully")
