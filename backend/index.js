@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const path = require('path')
 const cookieParser = require('cookie-parser')
+const { job } = require('./lib/cron')
 
 const productsRoute = require('./routes/productRoutes')
 const authRoutes = require('./routes/authRoutes')
@@ -15,6 +16,7 @@ mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('🟢 Connected to MongoDB Atlas'))
 .catch((err) => console.error('🔴 MongoDB Atlas connection error:', err));
 
+job.start()
 app.use(express.json())
 app.use(cookieParser())
 app.use('/products', productsRoute)
